@@ -28,6 +28,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: whitesmoke;
 }
 
 h1 {
@@ -42,7 +43,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -62,8 +62,6 @@ button:focus-visible {
   a:hover {
     color: #4ED7F1;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+  
 }
 

@@ -1,10 +1,10 @@
 import BASE_URL from "../config/apiConfig";
 
-const ENTRY_EXIT_URL = `${BASE_URL}/Api/EntryExit`;
+const ENTRY_EXIT_URL = BASE_URL;
 
 export async function GetEntryExitsRegisters (){
     try{
-        const response = await fetch(ENTRY_EXIT_URL);
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit`);
         if(!response.ok) throw new Error("Error fetching entry-extis");
         const data = await response.json();
         return data;
@@ -14,3 +14,56 @@ export async function GetEntryExitsRegisters (){
     }
 }
 
+export async function registerEntry(entryData) {
+    try {
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/Entry`, {
+            method: "POST", // 👈 asegúrate de que sea POST si el endpoint espera POST
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(entryData)
+        });
+
+        if (!response.ok) throw new Error("Failed to register vehicle entry");
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error register entry: ", error.message);
+        throw error;
+    }
+}
+
+export async function getAvailableSpaces(){
+    try{
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/Space`);
+        if(!response.ok) throw new Error("Failed to fecth parking spaces");
+        const data = await response.json();
+
+        return data.filter(space => !space.isOccupied);
+    }catch(error){
+        console.error("error fetching parking spaces: ", error.message);
+        return [];
+    }
+}
+
+export async function registerExit(plate, data){
+    try{
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/exit/${plate}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if(!response.ok) {
+            const errorText = await response.text(); // <- leer texto plano
+            throw new Error(errorText || "Failed to register vehicle Exit");
+        }
+        return await response.json();
+
+    }catch(error){
+        console.error("error fetching parking spaces: ", error.message);
+        return [];
+    }
+}

@@ -1,7 +1,9 @@
+import EntryForm from "../components/EntryForm";
+
 export default function EntryVehicles(){
     return(
-        <div>
-            <h1>Entry a vehicle</h1>
+        <div className="p-8">
+            <EntryForm/>
         </div>
     )
 }

@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import { registerExit } from "../services/entryExitService";
 
-const EntryExitTable = ({data}) => {
+
+
+
+const EntryExitTable = ({data, onRefresh}) => {
+
+    const [plate, setPlate] = useState("");
+    const [result, setResult] = useState(null);
+    const [error, setError] = useState(null);
+
+    const handleExit = async (record) => {
+        setError(null);
+        try {
+        const exitData = {
+            entryExitId: record.entryExitId,
+            exitTime: new Date().toISOString(),
+            tariffDTO: {
+            id: record.tariff?.id ?? 0,
+            vehicleType: record.tariff?.vehicleType ?? "unknown",
+            ratePerHour: record.tariff?.ratePerHour ?? 0
+            }
+        };
+
+        await registerExit(record.vehiclePlate.trim().toUpperCase(), exitData);
+
+        // ✅ Refresca los datos después de registrar la salida
+        if (onRefresh) {
+            await onRefresh();
+        }
+
+        } catch (err) {
+        console.error("Error registering exit:", err);
+        setError(err.message || "Failed to register vehicle Exit");
+        }
+    };
+
+
+
     return (
-        <div className="max-w-6xl max-auto p-6 bg-gray-800 shadow-md rounded-3xl border-fuchsia-600/40 border-4" >
+        <div className="max-w-6xl max-auto mx-auto p-6 bg-gray-800 shadow-md rounded-3xl border-fuchsia-600/40 border-4" >
             <h2 className="text-2x1 font-bold mb-4 text-white ">Parking lot entry history</h2>
             <div className="overflow-x-auto rounded-3xl shadow border-2 border-gray-200/60">
                 <table className="min-w-full table-auto ">
@@ -12,8 +49,9 @@ const EntryExitTable = ({data}) => {
                             <th className="px-4 py-2">Vehicle Plate</th>
                             <th className="px-4 py-2">Space</th>
                             <th className="px-4 py-2">Entry Time</th>
-                            <th className="px-4 py-2">Entry Exit</th>
+                            <th className="px-4 py-2">Exit</th>
                             <th className="px-4 py-2">Fee to paid</th>
+                            <th className="px-4 py-2">Exit?</th>
                         </tr>
                     </thead>
                     <tbody className="text-center text-sm text-white">
@@ -30,16 +68,22 @@ const EntryExitTable = ({data}) => {
                                     <td className="px-4 py-2" >{record.exitTime? new Date(record.exitTime).toLocaleString(): '—'}</td>
                                     <td className="px-4 py-2" >${record.amountToPay?.toFixed(2)}</td>
                                     <td className="px-4 py-2">
-                                        <span 
-                                            className={`px-2 py-1 rounded-full text-xs font-semibold${
-                                                record.exitTime
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-yellow-200 text-yellow-700'
-                                            }`}
-                                        
+                                       {record.exitTime ? (
+                                        new Date(record.exitTime).toLocaleString()
+                                       ) : (
+                                        <button
+                                            className="bg-red-500 hover:bg-red-600 text-black text-xs font-bold py-1 px-3  rounded"
+                                            onClick={() => handleExit(record)}
                                         >
+                                            Exit
+                                        </button>
+                                       )}
+                                       {error && (
+                                        <p className="text-red-500 font-semibold mt-4">
+                                            Error: {error}
+                                        </p>
+                                        )}
 
-                                        </span>
                                     </td>
                                 </tr>
                             ))
@@ -48,6 +92,7 @@ const EntryExitTable = ({data}) => {
                                 There are not records
 
                             </tr>
+                            
                         )}
 
                     </tbody>

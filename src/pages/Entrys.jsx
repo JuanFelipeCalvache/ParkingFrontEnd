@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { GetEntryExitsRegisters } from "../services/entryExitService";
+import { GetEntrysRegisters } from "../services/entryExitService";
 import EntryExitList from "../components/EntryExitList";
 
 const Entrys = () => {
     const [entries, setEntries] = useState([]);
 
     const fetchData = async () => {
-        const data = await GetEntryExitsRegisters();
+        const data = await GetEntrysRegisters();
         setEntries(data);
     };
 
     useEffect(() => {
         fetchData();
+
+        const interval  = setInterval(() => {
+            fetchData();
+        }, 3000);
+
+        return () => clearInterval(interval);
     }, []);
 
     return (

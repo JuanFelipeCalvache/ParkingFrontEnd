@@ -14,6 +14,19 @@ export async function GetEntryExitsRegisters (){
     }
 }
 
+export async function GetEntrysRegisters(){
+    try{
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/entrysInParking`);
+        if(!response.ok) throw new Error("Error fetching entrys");
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }catch(error){
+        console.error("Eror fetching entry Data", error.message);
+        return[]
+    }
+}
+
 export async function registerEntry(entryData) {
     try {
         const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/Entry`, {

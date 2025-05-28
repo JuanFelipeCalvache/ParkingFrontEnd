@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GetEntryExitsRegisters } from "../services/entryExitService";
+import { GetEntrysRegisters } from "../services/entryExitService";
 import EntryExitTable from "./EntryExitTable";
 
 export default function EntryExitList() {
@@ -10,7 +10,7 @@ export default function EntryExitList() {
   const fetchEntries = async () => {
     try {
       setLoading(true);
-      const data = await GetEntryExitsRegisters();
+      const data = await GetEntrysRegisters();
       setEntries(data);
     } catch (err) {
       setError(err.message);

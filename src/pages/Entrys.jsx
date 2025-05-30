@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetEntrysRegisters } from "../services/entryExitService";
-import EntryExitList from "../components/EntryExitList";
+import EntryList from "../components/EntryComponents/EntryList";
 
 const Entrys = () => {
     const [entries, setEntries] = useState([]);
@@ -13,16 +13,11 @@ const Entrys = () => {
     useEffect(() => {
         fetchData();
 
-        const interval  = setInterval(() => {
-            fetchData();
-        }, 3000);
-
-        return () => clearInterval(interval);
     }, []);
 
     return (
         <div>
-            <EntryExitList entries={entries} onRefresh={fetchData} />
+            <EntryList entries={entries} onRefresh={fetchData} />
         </div>
     );
 };

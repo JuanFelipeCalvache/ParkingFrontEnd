@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div>
-        <section className="w-full h-[75vh] relative overflow-hidden rounded-3xl">
+        <section className="w-full h-[75vh] relative overflow-hidden ">
         {/* Imagen */}
         <img
             src={images[currentIndex]}
@@ -44,18 +44,22 @@ export default function Home() {
 
         {/* Indicadores */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
+          {images.map((_, index) => (
             <div
-                key={index}
-                className={`w-3 h-3 rounded-full ${
+              key={index}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 currentIndex === index ? "bg-white" : "bg-white/50"
-                }`}
+              }`}
             ></div>
-            ))}
+          ))}
         </div>
+
+        
         </section>
+
+        
            {/* Sección de servicios */}
-        <section className="p-10">
+        <section className="p-10 border-t-8 border-gray-200/40">
 
             <p className="text-gray-600 mt-2 max-w-xl mx-auto pb-4">
                     Welcome to the parking management system. Here you can register vehicles,

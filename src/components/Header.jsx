@@ -7,7 +7,9 @@ import miLogo from '../assets/img/parking2.png'
 const navigation = [
   { name: 'Main page', path:'/'},
   { name: 'Entry Vehicle', path:'/entry-vehicles' },
+  { name: 'Recods list', path:'/recordListPage' },
   { name: 'Vehicles in the parking', path:'/entrys' },
+  
 ]
 
 function classNames(...classes) {

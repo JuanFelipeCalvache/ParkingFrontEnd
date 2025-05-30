@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { GetEntrysRegisters } from "../services/entryExitService";
-import EntryExitTable from "./EntryExitTable";
+import { GetEntrysRegisters } from "../../services/entryExitService";
+import EntryTable from "./EntryTable";
 
-export default function EntryExitList() {
+export default function EntryList() {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ export default function EntryExitList() {
 
   return (
     <div className="p-4">
-      <EntryExitTable data={entries} onRefresh={fetchEntries} />
+      <EntryTable data={entries} onRefresh={fetchEntries} />
     </div>
   );
 }

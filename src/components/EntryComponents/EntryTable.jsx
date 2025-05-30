@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { registerExit } from "../services/entryExitService";
+import { registerExit } from "../../services/entryExitService";
 
 
 
 
-const EntryExitTable = ({data, onRefresh}) => {
+const EntryTable = ({data, onRefresh}) => {
 
     const [plate, setPlate] = useState("");
     const [result, setResult] = useState(null);
@@ -39,7 +39,7 @@ const EntryExitTable = ({data, onRefresh}) => {
 
 
     return (
-        <div className="max-w-6xl max-auto mx-auto p-6 bg-gray-800 shadow-md rounded-3xl border-fuchsia-600/40 border-4" >
+        <div className="max-w-6xl max-auto p-6 bg-gray-800/80 shadow-md rounded-3xl border-fuchsia-600/40 border-4" >
             <h2 className="text-2x1 font-bold mb-4 text-white ">Parking lot entry history</h2>
             <div className="overflow-x-auto rounded-3xl shadow border-2 border-gray-200/60">
                 <table className="min-w-full table-auto ">
@@ -103,5 +103,5 @@ const EntryExitTable = ({data, onRefresh}) => {
     )
 };
 
-export default EntryExitTable;
+export default EntryTable;
 

@@ -30,7 +30,7 @@ export async function GetEntrysRegisters(){
 export async function registerEntry(entryData) {
     try {
         const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/Entry`, {
-            method: "POST", // 👈 asegúrate de que sea POST si el endpoint espera POST
+            method: "POST", 
             headers: {
                 "Content-Type": "application/json"
             },
@@ -51,7 +51,7 @@ export async function getAvailableSpaces(){
         const response = await fetch(`${ENTRY_EXIT_URL}/Api/Space`);
         if(!response.ok) throw new Error("Failed to fecth parking spaces");
         const data = await response.json();
-
+        console.log(data);
         return data.filter(space => !space.isOccupied);
     }catch(error){
         console.error("error fetching parking spaces: ", error.message);
@@ -79,4 +79,24 @@ export async function registerExit(plate, data){
         console.error("error fetching parking spaces: ", error.message);
         return [];
     }
+}
+
+export async function deleteRecord(id){
+    try {
+        const response = await fetch(`${ENTRY_EXIT_URL}/Api/EntryExit/entry-exit/${id}`, {
+            method: "DELETE",
+        });
+
+        if(!response.ok){
+            const errorText = await response.text();
+            throw new Error(errorText || "Error deleting record");
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error("Error deleting record: ", error.message);
+        return false;
+    }
+
 }

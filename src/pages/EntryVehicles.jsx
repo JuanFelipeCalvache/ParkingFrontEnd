@@ -1,4 +1,4 @@
-import EntryForm from "../components/EntryForm";
+import EntryForm from "../components/EntryComponents/EntryForm";
 
 export default function EntryVehicles(){
     return(

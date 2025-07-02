@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const images = [
   "/src/assets/img/parkingLot.png",
@@ -17,14 +17,21 @@ export default function Home() {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 4000)
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
-        <section className="w-full h-[75vh] relative overflow-hidden ">
+        <section className="w-full h-[40vh] md:h-[60vh] p-3 relative overflow-hidden">
         {/* Imagen */}
         <img
             src={images[currentIndex]}
             alt="Carrusel"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-3xl h-80hv "
         />
 
         {/* Botones */}

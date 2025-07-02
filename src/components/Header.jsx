@@ -35,7 +35,7 @@ export default function Header() {
               <img
                 alt="Mi logo"
                 src={miLogo}
-                className="h-12 w-12"
+                className="h-10 w-10"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">

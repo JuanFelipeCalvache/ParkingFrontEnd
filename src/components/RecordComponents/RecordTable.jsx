@@ -4,7 +4,7 @@ import { deleteRecord } from "../../services/entryExitService";
 const RecordTable = ({data, onRefresh}) => {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPages = 7;
+    const recordsPerPages = 10;
 
     const indexOfLastRecords = currentPage * recordsPerPages;
     const indexOfFirstRecord = indexOfLastRecords - recordsPerPages;
